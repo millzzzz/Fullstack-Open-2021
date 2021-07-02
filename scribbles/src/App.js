@@ -1,37 +1,42 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import Note from './components/Note'
 
-const Display = ({counter}) => <div>{counter}</div>
-const Button = ({handleClick, text}) => <button onClick={handleClick}>{text}</button>
-const History = ({allClicks}) => {
-  if(allClicks.length === 0){
-    return (
-      <div>The app is controlled by clicking on the buttons.</div>
-    )
+const App = (props) => {
+  const [ notes, setNotes ] = useState(props.notes)
+  const [ newNote, setNewNote ] = useState("a new note...")
+  const [ showAll, setShowAll ] = useState(true)
+  const handleChange = (event) => {
+    console.log(event.target.value)
+    setNewNote(event.target.value)
   }
-  return (
-    <div>button press history: {allClicks.join('')}</div>
-  )
-}
-
-const App = () => {
-  const [left, setLeft] = useState(0)
-  const [right, setRight] = useState(0)
-  const [allClicks, setAll] = useState([])
-  const handleLeftClick = () => {
-    setLeft(left+1)
-    setAll(allClicks.concat('l'))
+  const addNote = (event) => {
+    event.preventDefault()
+    const noteObject = {
+      content: newNote,
+      date: new Date().toISOString(),
+      important: Math.random() < 0.5,
+      id: notes.length + 1,
+    }
+    setNotes(notes.concat(noteObject))
+    setNewNote('')
   }
-  const handleRightClick = () => {
-    setRight(right+1)
-    setAll(allClicks.concat('r'))
-  }
+  const notesToShow = showAll ? notes : notes.filter(note => note.important === true)
   return (
     <div>
-      <Display counter={left}/>
-      <Button handleClick={handleLeftClick} text="left"/>
-      <Display counter={right}/>
-      <Button handleClick={handleRightClick} text="right"/>
-      <History allClicks={allClicks}/>
+      <h1>Notes</h1>
+      <div>
+        <button onClick={() => setShowAll(!showAll)}>show {showAll ? 'important' : 'all' }
+        </button>
+      </div>
+      <ul>
+        {notesToShow.map(note => 
+          <Note key={note.id} note={note} />
+        )}
+      </ul>
+      <form onSubmit={addNote}>
+        <input value={newNote} onChange={handleChange}/>
+        <button type="submit">save a note</button>
+      </form>
     </div>
   )
 }
