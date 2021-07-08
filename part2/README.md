@@ -1,0 +1,1 @@
+unfinished excercises for part2 a), b)
