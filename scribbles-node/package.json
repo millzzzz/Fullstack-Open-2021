@@ -16,7 +16,10 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+<<<<<<< HEAD
     "dotenv": "^10.0.0",
+=======
+>>>>>>> f2dea2c28860fb9fc2cd250d9452b20dc6b1f361
     "express": "^4.17.1",
     "mongoose": "^5.13.2"
   },
