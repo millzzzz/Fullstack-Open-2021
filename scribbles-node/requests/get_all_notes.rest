@@ -1,6 +1,6 @@
-DELETE http://localhost:3001/api/notes/60e847cecdc6760cb0fb46fe
-# content-type: application/json
+POST http://localhost:3001/api/notes/
+content-type: application/json
 
-# {
-#     "important": false
-# }
+{
+    "content": "Does hot-reload work?"
+}
